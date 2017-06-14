@@ -42,7 +42,7 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('/write',['data' => json_encode($data)]);
+        $this->client->post('write',['data' => json_encode($data)]);
     }
 
     /**
@@ -62,7 +62,7 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('/write-stream', ['data' => json_encode($data)]);
+        $this->client->post('write-stream', ['data' => json_encode($data)]);
     }
 
     /**
@@ -82,7 +82,7 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('/update', ['data' => json_encode($data)]);
+        $this->client->post('update', ['data' => json_encode($data)]);
     }
 
     /**
@@ -102,7 +102,7 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('/write-stream', ['data' => json_encode($data)]);
+        $this->client->post('write-stream', ['data' => json_encode($data)]);
     }
 
     /**
@@ -120,7 +120,7 @@ class ApiAdapter extends AbstractAdapter
             'newpath' => $newpath
         ];
 
-        $this->client->post('/rename', ['data' => json_encode($data)]);
+        $this->client->post('rename', ['data' => json_encode($data)]);
     }
 
     /**
@@ -138,7 +138,7 @@ class ApiAdapter extends AbstractAdapter
             'newpath' => $newpath
         ];
 
-        $this->client->post('/copy', ['data' => json_encode($data)]);
+        $this->client->post('copy', ['data' => json_encode($data)]);
     }
 
     /**
@@ -154,7 +154,7 @@ class ApiAdapter extends AbstractAdapter
             'path' => $path
         ];
 
-        $this->client->post('/delete', ['data' => json_encode($data)]);
+        $this->client->post('delete', ['data' => json_encode($data)]);
     }
 
     /**
@@ -170,7 +170,7 @@ class ApiAdapter extends AbstractAdapter
             'dirname' => $dirname
         ];
 
-        $this->client->post('/delete-dir', ['data' => json_encode($data)]);
+        $this->client->post('delete-dir', ['data' => json_encode($data)]);
     }
 
     /**
@@ -188,7 +188,7 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('/create-dir', ['data' => json_encode($data)]);
+        $this->client->post('create-dir', ['data' => json_encode($data)]);
     }
 
     /**
@@ -217,7 +217,7 @@ class ApiAdapter extends AbstractAdapter
             'path' => $path,
         ];
 
-        return (bool)$this->client->get('/has', ['data' => json_encode($data)])->getBody()->getContents();
+        return (bool)$this->client->get('has', ['data' => json_encode($data)])->getBody()->getContents();
     }
 
     /**
@@ -233,7 +233,7 @@ class ApiAdapter extends AbstractAdapter
             'path' => $path,
         ];
 
-        return json_decode($this->client->get('/read', ['data' => json_encode($data)])->getBody()->getContents(), true);
+        return json_decode($this->client->get('read', ['data' => json_encode($data)])->getBody()->getContents(), true);
     }
 
     /**
