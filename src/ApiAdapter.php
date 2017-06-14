@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
+namespace BT\FlysystemAdapter;
+
+use GuzzleHttp\Client;
 use League\Flysystem\Adapter\AbstractAdapter;
+use League\Flysystem\Config;
+use League\Flysystem\NotSupportedException;
 
 class ApiAdapter extends AbstractAdapter
 {
@@ -15,7 +20,7 @@ class ApiAdapter extends AbstractAdapter
      * ApiAdapter constructor.
      * @param \GuzzleHttp\Client $client
      */
-    public function __construct(GuzzleHttp\Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -25,11 +30,11 @@ class ApiAdapter extends AbstractAdapter
      *
      * @param string $path
      * @param string $contents
-     * @param \League\Flysystem\Config $config Config object
+     * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
      */
-    public function write($path, $contents, \League\Flysystem\Config $config)
+    public function write($path, $contents, Config $config)
     {
         $data = [
             'path' => $path,
@@ -45,11 +50,11 @@ class ApiAdapter extends AbstractAdapter
      *
      * @param string $path
      * @param resource $resource
-     * @param \League\Flysystem\Config $config Config object
+     * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
      */
-    public function writeStream($path, $resource, \League\Flysystem\Config $config)
+    public function writeStream($path, $resource, Config $config)
     {
         $data = [
             'path' => $path,
@@ -65,11 +70,11 @@ class ApiAdapter extends AbstractAdapter
      *
      * @param string $path
      * @param string $contents
-     * @param \League\Flysystem\Config $config Config object
+     * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
      */
-    public function update($path, $contents, \League\Flysystem\Config $config)
+    public function update($path, $contents, Config $config)
     {
         $data = [
             'path' => $path,
@@ -85,11 +90,11 @@ class ApiAdapter extends AbstractAdapter
      *
      * @param string $path
      * @param resource $resource
-     * @param \League\Flysystem\Config $config Config object
+     * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
      */
-    public function updateStream($path, $resource, \League\Flysystem\Config $config)
+    public function updateStream($path, $resource, Config $config)
     {
         $data = [
             'path' => $path,
@@ -172,11 +177,11 @@ class ApiAdapter extends AbstractAdapter
      * Create a directory.
      *
      * @param string $dirname directory name
-     * @param \League\Flysystem\Config $config
+     * @param Config $config
      *
      * @return array|false
      */
-    public function createDir($dirname, \League\Flysystem\Config $config)
+    public function createDir($dirname, Config $config)
     {
         $data = [
             'dirname' => $dirname,
@@ -240,7 +245,7 @@ class ApiAdapter extends AbstractAdapter
      */
     public function readStream($path)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     /**
@@ -253,7 +258,7 @@ class ApiAdapter extends AbstractAdapter
      */
     public function listContents($directory = '', $recursive = false)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     /**
@@ -265,7 +270,7 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getMetadata($path)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     /**
@@ -277,7 +282,7 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getSize($path)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     /**
@@ -289,7 +294,7 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getMimetype($path)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     /**
@@ -301,7 +306,7 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getTimestamp($path)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 
     /**
@@ -313,6 +318,6 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getVisibility($path)
     {
-        throw new \League\Flysystem\NotSupportedException();
+        throw new NotSupportedException();
     }
 }
