@@ -42,8 +42,12 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('write',['data' => json_encode($data)]);
-    }
+        $this->client->post('write', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Write a new file using a stream.
@@ -62,8 +66,12 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('write-stream', ['data' => json_encode($data)]);
-    }
+        $this->client->post('write-stream', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Update a file.
@@ -82,8 +90,12 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('update', ['data' => json_encode($data)]);
-    }
+        $this->client->post('update', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Update a file using a stream.
@@ -102,8 +114,12 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('write-stream', ['data' => json_encode($data)]);
-    }
+        $this->client->post('write-stream', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Rename a file.
@@ -120,8 +136,12 @@ class ApiAdapter extends AbstractAdapter
             'newpath' => $newpath
         ];
 
-        $this->client->post('rename', ['data' => json_encode($data)]);
-    }
+        $this->client->post('rename', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Copy a file.
@@ -138,8 +158,12 @@ class ApiAdapter extends AbstractAdapter
             'newpath' => $newpath
         ];
 
-        $this->client->post('copy', ['data' => json_encode($data)]);
-    }
+        $this->client->post('copy', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Delete a file.
@@ -154,8 +178,12 @@ class ApiAdapter extends AbstractAdapter
             'path' => $path
         ];
 
-        $this->client->post('delete', ['data' => json_encode($data)]);
-    }
+        $this->client->post('delete', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Delete a directory.
@@ -170,8 +198,12 @@ class ApiAdapter extends AbstractAdapter
             'dirname' => $dirname
         ];
 
-        $this->client->post('delete-dir', ['data' => json_encode($data)]);
-    }
+        $this->client->post('delete-dir', [
+                'form_params' => [
+                    'data' => json_encode($data)
+                ]
+            ]
+        );    }
 
     /**
      * Create a directory.
@@ -188,7 +220,12 @@ class ApiAdapter extends AbstractAdapter
             'config' => []
         ];
 
-        $this->client->post('create-dir', ['data' => json_encode($data)]);
+        $this->client->post('create-dir', [
+            'form_params' => [
+                'data' => json_encode($data)
+                ]
+            ]
+        );
     }
 
     /**
@@ -217,7 +254,16 @@ class ApiAdapter extends AbstractAdapter
             'path' => $path,
         ];
 
-        return (bool)$this->client->get('has', ['data' => json_encode($data)])->getBody()->getContents();
+        $response = $this->client->get('has', [
+            'query' => [
+                'data' => json_encode($data)
+            ]
+        ]);
+
+        $content = $response->getBody()->getContents();
+        $content = json_decode($content, true);
+
+        return $content['data'] === true;
     }
 
     /**
@@ -233,7 +279,16 @@ class ApiAdapter extends AbstractAdapter
             'path' => $path,
         ];
 
-        return json_decode($this->client->get('read', ['data' => json_encode($data)])->getBody()->getContents(), true);
+        $response = $this->client->get('read', [
+            'query' => [
+                'data' => json_encode($data)
+            ]
+        ]);
+
+        $content = $response->getBody()->getContents();
+        $content = json_decode($content, true);
+
+        return $content;
     }
 
     /**
