@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BT\FlysystemAdapter;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\Config;
-use League\Flysystem\NotSupportedException;
 
 class ApiAdapter extends AbstractAdapter
 {
@@ -36,18 +36,18 @@ class ApiAdapter extends AbstractAdapter
      */
     public function write($path, $contents, Config $config)
     {
-        $data = [
-            'path' => $path,
-            'contents' => $contents,
-            'config' => []
-        ];
-
-        $this->client->post('write', [
-                'form_params' => [
-                    'data' => json_encode($data)
+        try {
+            $result = $this->client->post('write', [
+                    'query' => ['path' => $path],
+                    'body' => $contents
                 ]
-            ]
-        );    }
+            );
+
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Write a new file using a stream.
@@ -60,18 +60,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function writeStream($path, $resource, Config $config)
     {
-        $data = [
-            'path' => $path,
-            'contents' => $resource,
-            'config' => []
-        ];
+        try {
+            $result = $this->client->post('write-stream', [
+                'query' => ['path' => $path],
+                'body' => $resource
+            ]);
 
-        $this->client->post('write-stream', [
-                'form_params' => [
-                    'data' => json_encode($data)
-                ]
-            ]
-        );    }
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Update a file.
@@ -84,18 +83,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function update($path, $contents, Config $config)
     {
-        $data = [
-            'path' => $path,
-            'contents' => $contents,
-            'config' => []
-        ];
+        try {
+            $result = $this->client->post('update', [
+                'query' => ['path' => $path],
+                'body' => $contents
+            ]);
 
-        $this->client->post('update', [
-                'form_params' => [
-                    'data' => json_encode($data)
-                ]
-            ]
-        );    }
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Update a file using a stream.
@@ -108,18 +106,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function updateStream($path, $resource, Config $config)
     {
-        $data = [
-            'path' => $path,
-            'contents' => $resource,
-            'config' => []
-        ];
+        try {
+            $result = $this->client->post('update', [
+                'query' => ['path' => $path],
+                'body' => $resource
+            ]);
 
-        $this->client->post('write-stream', [
-                'form_params' => [
-                    'data' => json_encode($data)
-                ]
-            ]
-        );    }
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Rename a file.
@@ -131,17 +128,19 @@ class ApiAdapter extends AbstractAdapter
      */
     public function rename($path, $newpath)
     {
-        $data = [
-            'path' => $path,
-            'newpath' => $newpath
-        ];
-
-        $this->client->post('rename', [
-                'form_params' => [
-                    'data' => json_encode($data)
+        try {
+            $result = $this->client->post('rename', [
+                'query' => [
+                    'path' => $path,
+                    'newpath' => $newpath
                 ]
-            ]
-        );    }
+            ]);
+
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Copy a file.
@@ -153,17 +152,19 @@ class ApiAdapter extends AbstractAdapter
      */
     public function copy($path, $newpath)
     {
-        $data = [
-            'path' => $path,
-            'newpath' => $newpath
-        ];
-
-        $this->client->post('copy', [
-                'form_params' => [
-                    'data' => json_encode($data)
+        try {
+            $result = $this->client->post('copy', [
+                'query' => [
+                    'path' => $path,
+                    'newpath' => $newpath
                 ]
-            ]
-        );    }
+            ]);
+
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Delete a file.
@@ -174,16 +175,18 @@ class ApiAdapter extends AbstractAdapter
      */
     public function delete($path)
     {
-        $data = [
-            'path' => $path
-        ];
-
-        $this->client->post('delete', [
-                'form_params' => [
-                    'data' => json_encode($data)
+        try {
+            $result = $this->client->post('delete', [
+                'query' => [
+                    'path' => $path,
                 ]
-            ]
-        );    }
+            ]);
+
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Delete a directory.
@@ -194,16 +197,18 @@ class ApiAdapter extends AbstractAdapter
      */
     public function deleteDir($dirname)
     {
-        $data = [
-            'dirname' => $dirname
-        ];
-
-        $this->client->post('delete-dir', [
-                'form_params' => [
-                    'data' => json_encode($data)
+        try {
+            $result = $this->client->post('delete-dir', [
+                'query' => [
+                    'dirname' => $dirname,
                 ]
-            ]
-        );    }
+            ]);
+
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
+    }
 
     /**
      * Create a directory.
@@ -215,17 +220,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function createDir($dirname, Config $config)
     {
-        $data = [
-            'dirname' => $dirname,
-            'config' => []
-        ];
-
-        $this->client->post('create-dir', [
-            'form_params' => [
-                'data' => json_encode($data)
+        try {
+            $result = $this->client->post('create-dir', [
+                'query' => [
+                    'dirname' => $dirname,
                 ]
-            ]
-        );
+            ]);
+
+            return json_decode($result->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -250,20 +255,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function has($path)
     {
-        $data = [
-            'path' => $path,
-        ];
+        try {
+            $response = $this->client->get('has', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
 
-        $response = $this->client->get('has', [
-            'query' => [
-                'data' => json_encode($data)
-            ]
-        ]);
-
-        $content = $response->getBody()->getContents();
-        $content = json_decode($content, true);
-
-        return $content['data'] === true;
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return null;
+        }
     }
 
     /**
@@ -275,20 +277,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function read($path)
     {
-        $data = [
-            'path' => $path,
-        ];
+        try {
+            $response = $this->client->get('read', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
 
-        $response = $this->client->get('read', [
-            'query' => [
-                'data' => json_encode($data)
-            ]
-        ]);
-
-        $content = $response->getBody()->getContents();
-        $content = json_decode($content, true);
-
-        return $content;
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -300,7 +299,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function readStream($path)
     {
-        throw new NotSupportedException();
+        try {
+            $response = $this->client->get('read', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -313,7 +322,18 @@ class ApiAdapter extends AbstractAdapter
      */
     public function listContents($directory = '', $recursive = false)
     {
-        throw new NotSupportedException();
+        try {
+            $response = $this->client->get('list-contents', [
+                'query' => [
+                    'directory' => $directory,
+                    'recursive' => $recursive
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return [];
+        }
     }
 
     /**
@@ -325,7 +345,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getMetadata($path)
     {
-        throw new NotSupportedException();
+        try {
+            $response = $this->client->get('get-metadata', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -337,7 +367,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getSize($path)
     {
-        throw new NotSupportedException();
+        try {
+            $response = $this->client->get('get-size', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -349,7 +389,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getMimetype($path)
     {
-        throw new NotSupportedException();
+        try {
+            $response = $this->client->get('get-mimetype', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -361,7 +411,17 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getTimestamp($path)
     {
-        throw new NotSupportedException();
+        try {
+            $response = $this->client->get('get-timestamp', [
+                'query' => [
+                    'path' => $path,
+                ]
+            ]);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            return false;
+        }
     }
 
     /**
@@ -373,6 +433,6 @@ class ApiAdapter extends AbstractAdapter
      */
     public function getVisibility($path)
     {
-        throw new NotSupportedException();
+        return false;
     }
 }
