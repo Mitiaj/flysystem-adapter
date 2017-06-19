@@ -43,7 +43,9 @@ class ApiAdapter extends AbstractAdapter
                 ]
             );
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
         } catch (RequestException $e) {
             return false;
         }
@@ -66,7 +68,9 @@ class ApiAdapter extends AbstractAdapter
                 'body' => $resource
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
         } catch (RequestException $e) {
             return false;
         }
@@ -89,7 +93,9 @@ class ApiAdapter extends AbstractAdapter
                 'body' => $contents
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
         } catch (RequestException $e) {
             return false;
         }
@@ -112,7 +118,9 @@ class ApiAdapter extends AbstractAdapter
                 'body' => $resource
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
         } catch (RequestException $e) {
             return false;
         }
@@ -136,7 +144,9 @@ class ApiAdapter extends AbstractAdapter
                 ]
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
         } catch (RequestException $e) {
             return false;
         }
@@ -160,7 +170,10 @@ class ApiAdapter extends AbstractAdapter
                 ]
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -182,7 +195,10 @@ class ApiAdapter extends AbstractAdapter
                 ]
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -204,7 +220,10 @@ class ApiAdapter extends AbstractAdapter
                 ]
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -227,7 +246,10 @@ class ApiAdapter extends AbstractAdapter
                 ]
             ]);
 
-            return json_decode($result->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -256,13 +278,16 @@ class ApiAdapter extends AbstractAdapter
     public function has($path)
     {
         try {
-            $response = $this->client->get('has', [
+            $result = $this->client->get('has', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return null;
         }
@@ -278,13 +303,16 @@ class ApiAdapter extends AbstractAdapter
     public function read($path)
     {
         try {
-            $response = $this->client->get('read', [
+            $result = $this->client->get('read', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -300,13 +328,16 @@ class ApiAdapter extends AbstractAdapter
     public function readStream($path)
     {
         try {
-            $response = $this->client->get('read', [
+            $result = $this->client->get('read', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -323,14 +354,17 @@ class ApiAdapter extends AbstractAdapter
     public function listContents($directory = '', $recursive = false)
     {
         try {
-            $response = $this->client->get('list-contents', [
+            $result = $this->client->get('list-contents', [
                 'query' => [
                     'directory' => $directory,
                     'recursive' => $recursive
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return [];
         }
@@ -346,13 +380,16 @@ class ApiAdapter extends AbstractAdapter
     public function getMetadata($path)
     {
         try {
-            $response = $this->client->get('get-metadata', [
+            $result = $this->client->get('get-metadata', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -368,13 +405,16 @@ class ApiAdapter extends AbstractAdapter
     public function getSize($path)
     {
         try {
-            $response = $this->client->get('get-size', [
+            $result = $this->client->get('get-size', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -390,13 +430,16 @@ class ApiAdapter extends AbstractAdapter
     public function getMimetype($path)
     {
         try {
-            $response = $this->client->get('get-mimetype', [
+            $result = $this->client->get('get-mimetype', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
@@ -412,13 +455,16 @@ class ApiAdapter extends AbstractAdapter
     public function getTimestamp($path)
     {
         try {
-            $response = $this->client->get('get-timestamp', [
+            $result = $this->client->get('get-timestamp', [
                 'query' => [
                     'path' => $path,
                 ]
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $response = json_decode($result->getBody()->getContents(), true);
+
+            return $response['response'];
+
         } catch (RequestException $e) {
             return false;
         }
