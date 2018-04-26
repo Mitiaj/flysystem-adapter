@@ -1,6 +1,6 @@
 {
   "name": "betarpininku/flysystem-adapter",
-  "description": "Filesystem adapter through betarpininku api",
+  "description": "Filesystem adapter through api",
   "keywords": ["repository", "laravel"],
   "type": "project",
 
