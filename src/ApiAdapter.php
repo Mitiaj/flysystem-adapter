@@ -336,11 +336,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
+            return $response['response'];
 
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
@@ -366,11 +366,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
+            return $response['response'];
 
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
@@ -396,11 +396,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
+            return $response['response'];
 
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
@@ -428,11 +428,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
+            return $response['response'];
 
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
@@ -458,12 +458,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
-
+            return $response['response'];
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
@@ -488,11 +487,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
+            return $response['response'];
 
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
@@ -518,11 +517,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
+            return $response['response'];
 
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
@@ -548,12 +547,11 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            if ($response['response']) {
-                return true;
+            if ($response['response'] == false && isset($response['message'])) {
+                throw new Exception($response['message']);
             }
 
-            throw new Exception($response['message']);
-
+            return $response['response'];
         } catch (RequestException $e) {
             throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
