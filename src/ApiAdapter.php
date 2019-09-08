@@ -47,7 +47,7 @@ class ApiAdapter extends AbstractAdapter
 
             return $response['response'];
         } catch (RequestException $e) {
-            return false;
+            throw;
         }
     }
 
@@ -72,7 +72,7 @@ class ApiAdapter extends AbstractAdapter
 
             return $response['response'];
         } catch (RequestException $e) {
-            return false;
+            throw;
         }
     }
 
