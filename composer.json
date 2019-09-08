@@ -25,5 +25,8 @@
   "suggest": {
     "league/flysystem": "^1.0",
     "guzzlehttp/guzzle": "^6.2"
+  },
+  "require": {
+    "ext-json": "*"
   }
 }

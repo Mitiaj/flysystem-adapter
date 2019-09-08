@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace BT\FlysystemAdapter;
@@ -8,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\Config;
+use League\Flysystem\Exception;
 
 class ApiAdapter extends AbstractAdapter
 {
@@ -33,6 +33,7 @@ class ApiAdapter extends AbstractAdapter
      * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
+     * @throws Exception
      */
     public function write($path, $contents, Config $config)
     {
@@ -44,10 +45,14 @@ class ApiAdapter extends AbstractAdapter
             );
 
             $response = json_decode($result->getBody()->getContents(), true);
+            if ($response['response']) {
+                return true;
+            }
 
-            return $response['response'];
+            throw new Exception($response['message']);
+
         } catch (RequestException $e) {
-            throw;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -59,6 +64,7 @@ class ApiAdapter extends AbstractAdapter
      * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
+     * @throws Exception
      */
     public function writeStream($path, $resource, Config $config)
     {
@@ -70,9 +76,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
+
         } catch (RequestException $e) {
-            throw;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -84,6 +95,7 @@ class ApiAdapter extends AbstractAdapter
      * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
+     * @throws Exception
      */
     public function update($path, $contents, Config $config)
     {
@@ -95,9 +107,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
+
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -109,6 +126,7 @@ class ApiAdapter extends AbstractAdapter
      * @param Config $config Config object
      *
      * @return array|false false on failure file meta data on success
+     * @throws Exception
      */
     public function updateStream($path, $resource, Config $config)
     {
@@ -120,9 +138,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
+
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -133,6 +156,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $newpath
      *
      * @return bool
+     * @throws Exception
      */
     public function rename($path, $newpath)
     {
@@ -146,9 +170,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
+
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -159,6 +188,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $newpath
      *
      * @return bool
+     * @throws Exception
      */
     public function copy($path, $newpath)
     {
@@ -172,10 +202,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -185,6 +219,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return bool
+     * @throws Exception
      */
     public function delete($path)
     {
@@ -197,10 +232,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -210,6 +249,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $dirname
      *
      * @return bool
+     * @throws Exception
      */
     public function deleteDir($dirname)
     {
@@ -222,10 +262,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -236,6 +280,7 @@ class ApiAdapter extends AbstractAdapter
      * @param Config $config
      *
      * @return array|false
+     * @throws Exception
      */
     public function createDir($dirname, Config $config)
     {
@@ -248,10 +293,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -274,6 +323,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|bool|null
+     * @throws Exception
      */
     public function has($path)
     {
@@ -286,10 +336,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return null;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -299,6 +353,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|false
+     * @throws Exception
      */
     public function read($path)
     {
@@ -311,10 +366,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -324,6 +383,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|false
+     * @throws Exception
      */
     public function readStream($path)
     {
@@ -336,10 +396,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -350,6 +414,7 @@ class ApiAdapter extends AbstractAdapter
      * @param bool $recursive
      *
      * @return array
+     * @throws Exception
      */
     public function listContents($directory = '', $recursive = false)
     {
@@ -363,10 +428,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return [];
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -376,6 +445,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|false
+     * @throws Exception
      */
     public function getMetadata($path)
     {
@@ -388,10 +458,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -401,6 +475,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|false
+     * @throws Exception
      */
     public function getSize($path)
     {
@@ -413,10 +488,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -426,6 +505,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|false
+     * @throws Exception
      */
     public function getMimetype($path)
     {
@@ -438,10 +518,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -451,6 +535,7 @@ class ApiAdapter extends AbstractAdapter
      * @param string $path
      *
      * @return array|false
+     * @throws Exception
      */
     public function getTimestamp($path)
     {
@@ -463,10 +548,14 @@ class ApiAdapter extends AbstractAdapter
 
             $response = json_decode($result->getBody()->getContents(), true);
 
-            return $response['response'];
+            if ($response['response']) {
+                return true;
+            }
+
+            throw new Exception($response['message']);
 
         } catch (RequestException $e) {
-            return false;
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
     }
 
